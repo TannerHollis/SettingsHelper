@@ -65,8 +65,16 @@ namespace SettingsHelper
                     ret = js["group"]["voltage"]["27P2D"];
                     break;
 
+                case "59P1P":
+                    ret = js["group"]["voltage"]["59P1P"];
+                    break;
+
+                case "59P1D":
+                    ret = js["group"]["voltage"]["59P1D"];
+                    break;
+
                 default:
-                    ret = js["relayType"];
+                    ret = js["NA"];
                     break;
             }
 

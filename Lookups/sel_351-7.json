@@ -1,5 +1,6 @@
 {
   "relayType": "SEL-351-7",
+  "NA": "NOT_FOUND",
 
   "global": {
     "FREQ": "NFREQ",
@@ -136,7 +137,9 @@
       "59P1P": "59P1P",
       "59P1D": "SV20PU",
       "59P2P": "59P2P",
-      "59P2D": "SV21PU"
+      "59P2D": "SV21PU",
+      "59N1P": "59N1P",
+      "59N1D": "SV22PU"
     },
 
     "frequency": {
