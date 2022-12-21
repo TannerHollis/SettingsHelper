@@ -9,23 +9,32 @@ namespace SettingsHelper
 {
     public class Setting
     {
+        private int _lineIndex;
         private string _wordBit;
         private string _setting;
+        private string _originalSetting;
         private bool _hasChanged;
 
-        Setting(string wordBit, string setting)
+        public Setting(int lineIndex, string wordBit, string setting)
         {
+            _lineIndex= lineIndex;
             _wordBit = wordBit;
             _setting = setting;
+            
+            // Store originial setting to compare new setpoints to original settings,
+            //  this significatly reduces amount of file write operations.
+            _originalSetting = setting;
             _hasChanged = false;
+        }
+
+        public int GetLineIndex()
+        {
+            return _lineIndex;
         }
 
         public void SetSetting(string setting)
         {
-            if(!setting.Equals(this._setting))
-            {
-                _hasChanged = true;
-            }
+            _hasChanged = !setting.Equals(this._originalSetting);
             _setting = setting;
         }
 
@@ -44,20 +53,20 @@ namespace SettingsHelper
             return _hasChanged;
         }
 
-        public string ToString()
+        override public string ToString()
         {
             return _wordBit + ",\"" + _setting + "\"";
         }
 
-        public bool WordBitEquals(Setting a)
+        public bool WordBitEquals(string a)
         {
-            return a.GetWordbit().Equals(this._wordBit);
+            return a.Equals(this._wordBit);
         }
 
-        static public Setting FromLine(String line)
+        static public Setting FromLine(int lineIndex, String line)
         {
             String[] splitLine = line.Split(',');
-            Setting setting = new Setting(splitLine[0], splitLine[1].Replace("\"", ""));
+            Setting setting = new Setting(lineIndex, splitLine[0], splitLine[1].Replace("\"", ""));
             return setting;
         }
     }

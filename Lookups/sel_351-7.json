@@ -19,6 +19,15 @@
     "RID": "RID",
     "TID": "TID"
   },
+  "logic": {
+    "timers": {
+      "inputFormat": "SV{0,0:D1}",
+      "pickupFormat": "SV{0,0:D1}PU",
+      "dropoutFormat": "SV{0,0:D1}DO",
+      "timerMaxCycles": 999999.00
+    },
+    "logicVariables": true
+  },
 
   "group": {
     "overcurrent": {
@@ -69,8 +78,12 @@
             "minimumTime": null
           },
           "negative": {
-            "pickup": "50Q{0}P",
-            "delay": "67Q{0}D"
+            "pickup": "51QP",
+            "curve": "51QC",
+            "timeDial": "51QTD",
+            "emReset": "51QRS",
+            "timeAdder": null,
+            "minimumTime": null
           }
         },
         {
@@ -84,19 +97,54 @@
             "minimumTime": null
           },
           "ground": {
-            "pickup": "50G{0}P",
-            "delay": "67G{0}D"
+            "pickup": "51G2P",
+            "curve": "51G2C",
+            "timeDial": "51G2TD",
+            "emReset": "51G2RS",
+            "timeAdder": null,
+            "minimumTime": null
           },
           "neutral": {
-            "pickup": "50N{0}P",
-            "delay": "67N{0}D"
+            "pickup": null,
+            "curve": null,
+            "timeDial": null,
+            "emReset": null,
+            "timeAdder": null,
+            "minimumTime": null
           },
           "negative": {
-            "pickup": "50Q{0}P",
-            "delay": "67Q{0}D"
+            "pickup": null,
+            "curve": null,
+            "timeDial": null,
+            "emReset": null,
+            "timeAdder": null,
+            "minimumTime": null
           }
         }
       ]
+    },
+
+    "harmonicBlocking": {
+      "pickup": "HBL2P",
+      "pickupDelay": "HBL2PU",
+      "dropoutDelay": "HBL2DO"
+    },
+
+    "voltage": {
+      "under": {
+        "format": "27P{0}P",
+        "elements": 2
+      },
+      "over": {
+        "format": "59P{0}P",
+        "elements": 2
+      }
+    },
+
+    "frequency": {
+      "under": {
+
+      }
     }
   }
 }

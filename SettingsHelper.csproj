@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SettingsGroup.cs" />
     <Compile Include="SettingsTranslator.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="SettingsHelper.cs" />
