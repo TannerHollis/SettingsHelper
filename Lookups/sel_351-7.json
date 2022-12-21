@@ -5,9 +5,6 @@
     "FREQ": "NFREQ",
     "ROT": "PHROT",
     "PTCONN": "PTCONN",
-  },
-
-  "general": {
     "CTR": "CTR",
     "CTRN": "CTRN",
     "PTR": "PTR",
@@ -19,6 +16,7 @@
     "RID": "RID",
     "TID": "TID"
   },
+
   "logic": {
     "timers": {
       "inputFormat": "SV{0,0:D1}",
@@ -131,20 +129,25 @@
     },
 
     "voltage": {
-      "under": {
-        "format": "27P{0}P",
-        "elements": 2
-      },
-      "over": {
-        "format": "59P{0}P",
-        "elements": 2
-      }
+      "27P1P": "27P1P",
+      "27P1D": "SV18PU",
+      "27P2P": "27P2P",
+      "27P2D": "SV19PU",
+      "59P1P": "59P1P",
+      "59P1D": "SV20PU",
+      "59P2P": "59P2P",
+      "59P2D": "SV21PU"
     },
 
     "frequency": {
-      "under": {
-
-      }
+      "81U1P": "81D1P",
+      "81U1D": "81D1D",
+      "81U2P": "81D2P",
+      "81U2D": "81D2D",
+      "81O1P": "81D3P",
+      "81O1D": "81D3D",
+      "81O2P": "81D4P",
+      "81O2D": "81D4D"
     }
   }
 }

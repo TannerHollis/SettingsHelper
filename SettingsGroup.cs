@@ -12,7 +12,7 @@ namespace SettingsHelper
         private string _fileName;
 
         public List<Setting> _settings;
-
+        
         public SettingsGroup(string fileName)
         {
             _fileName = fileName;
