@@ -31,22 +31,20 @@
   "group": {
     "overcurrent": {
       "instantaneous": {
-        "phase": {
-          "pickup": "50P{0}P",
-          "delay": "67P{0}D"
-        },
-        "ground": {
-          "pickup": "50G{0}P",
-          "delay": "67G{0}D"
-        },
-        "neutral": {
-          "pickup": "50N{0}P",
-          "delay": "67N{0}D"
-        },
-        "negative": {
-          "pickup": "50Q{0}P",
-          "delay": "67Q{0}D"
-        }
+        "50P1P": "50P1P",
+        "50P1D": "67P1D",
+        "50P2P": "50P2P",
+        "50P2D": "67P2D",
+        "50P3P": "50P3P",
+        "50P3D": "67P3D",
+        "50P4P": "50P4P",
+        "50P4D": "67P4D",
+        "50G1P": "50G1P",
+        "50G1D": "67G1D",
+        "50G2P": "50G2P",
+        "50G2D": "67G2D",
+        "50G3P": "50G3P",
+        "50G3D": "67G3D"
       },
 
       "time": [
@@ -143,12 +141,15 @@
     },
 
     "frequency": {
+      "maxDelayCycles": 16000.00,
       "81U1P": "81D1P",
       "81U1D": "81D1D",
+      "81U1DEX": "SV23PU",
       "81U2P": "81D2P",
       "81U2D": "81D2D",
       "81O1P": "81D3P",
       "81O1D": "81D3D",
+      "81O1DEX": "SV24PU",
       "81O2P": "81D4P",
       "81O2D": "81D4D"
     }
