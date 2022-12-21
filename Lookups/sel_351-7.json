@@ -1,0 +1,102 @@
+{
+  "relayType": "SEL-351-7",
+
+  "global": {
+    "FREQ": "NFREQ",
+    "ROT": "PHROT",
+    "PTCONN": "PTCONN",
+  },
+
+  "general": {
+    "CTR": "CTR",
+    "CTRN": "CTRN",
+    "PTR": "PTR",
+    "VNOM": {
+      "wordBit": "VNOM",
+      "L-L": false
+    },
+    "selEquationType": "AND",
+    "RID": "RID",
+    "TID": "TID"
+  },
+
+  "group": {
+    "overcurrent": {
+      "instantaneous": {
+        "phase": {
+          "pickup": "50P{0}P",
+          "delay": "67P{0}D"
+        },
+        "ground": {
+          "pickup": "50G{0}P",
+          "delay": "67G{0}D"
+        },
+        "neutral": {
+          "pickup": "50N{0}P",
+          "delay": "67N{0}D"
+        },
+        "negative": {
+          "pickup": "50Q{0}P",
+          "delay": "67Q{0}D"
+        }
+      },
+
+      "time": [
+        {
+          "phase": {
+            "3P": true,
+            "pickup": "51PP",
+            "curve": "51PC",
+            "timeDial": "51PTD",
+            "emReset": "51PRS",
+            "timeAdder": null,
+            "minimumTime": null
+          },
+          "ground": {
+            "pickup": "51GP",
+            "curve": "51GC",
+            "timeDial": "51GTD",
+            "emReset": "51GRS",
+            "timeAdder": null,
+            "minimumTime": null
+          },
+          "neutral": {
+            "pickup": "51GP",
+            "curve": "51GC",
+            "timeDial": "51GTD",
+            "emReset": "51GRS",
+            "timeAdder": null,
+            "minimumTime": null
+          },
+          "negative": {
+            "pickup": "50Q{0}P",
+            "delay": "67Q{0}D"
+          }
+        },
+        {
+          "phase": {
+            "3P": false,
+            "pickup": "51{0}P",
+            "curve": "51{0}C",
+            "timeDial": "51{0}TD",
+            "emReset": "51{0}RS",
+            "timeAdder": null,
+            "minimumTime": null
+          },
+          "ground": {
+            "pickup": "50G{0}P",
+            "delay": "67G{0}D"
+          },
+          "neutral": {
+            "pickup": "50N{0}P",
+            "delay": "67N{0}D"
+          },
+          "negative": {
+            "pickup": "50Q{0}P",
+            "delay": "67Q{0}D"
+          }
+        }
+      ]
+    }
+  }
+}
