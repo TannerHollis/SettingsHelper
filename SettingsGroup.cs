@@ -31,6 +31,11 @@ namespace SettingsHelper
             }
         }
 
+        public string GetFileName()
+        {
+            return Path.GetFileName(_fileName);
+        }
+
         public void WriteSettingsToFile()
         {
             string fileName = _fileName;

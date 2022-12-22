@@ -72,6 +72,14 @@ namespace SettingsHelper
                     ret = js["group"]["voltage"]["59P1D"];
                     break;
 
+                case "59P2P":
+                    ret = js["group"]["voltage"]["59P2P"];
+                    break;
+
+                case "59P2D":
+                    ret = js["group"]["voltage"]["59P2D"];
+                    break;
+
                 // TODO: Complete the switch case tree for all origninal WordBits
 
                 default:
@@ -79,7 +87,22 @@ namespace SettingsHelper
                     break;
             }
 
-            return ret.GetValue<String>();
+            if(ret != null)
+            {
+                return ret.GetValue<string>();
+            }
+            else
+            {
+                return "NOT_FOUND";
+            }
+        }
+
+        public List<SettingChange> SetGenericSetting(string genericWordBit, string setting)
+        {
+            List<SettingChange> sc = new List<SettingChange>();
+
+
+            return sc;
         }
 
         private void LoadJsonFile(string relayType)

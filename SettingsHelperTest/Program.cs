@@ -71,6 +71,33 @@ namespace SettingsHelperTest
 
                 calcSheet.Close();
             }
+
+            // Test Relay.cs
+            {
+                string relayFile = "SEL-351S.rdb";
+
+                string fullFileName = Path.Combine(Directory.GetCurrentDirectory(), relayFile);
+
+                Relay relay = new Relay(fullFileName);
+                string[] relays = relay.GetRelayNames();
+
+                foreach(string relayName in relays)
+                {
+                    Console.WriteLine(relayName);
+                }
+
+                relay.LoadRelay(0);
+                string[] groupNames = relay.GetGroupNames();
+
+                foreach(string groupName in groupNames)
+                {
+                    Console.WriteLine(groupName);
+                }
+
+                relay["SET_1.TXT"]["RID"].SetSetting("TEST SETTINGS 1...");
+
+                relay.CompressRelayFiles();
+            }
         }
 
         private static void PrintTestPass(string testName, bool pass)

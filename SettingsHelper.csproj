@@ -42,6 +42,9 @@
       <HintPath>packages\Microsoft.Office.Interop.Word.15.0.4797.1004\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="SevenZip, Version=19.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\LZMA-SDK.22.1.0\lib\net20\SevenZip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -78,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalcSheet.cs" />
+    <Compile Include="Relay.cs" />
+    <Compile Include="SettingChange.cs" />
     <Compile Include="SettingsGroup.cs" />
     <Compile Include="SettingsTranslator.cs" />
     <Compile Include="Setting.cs" />
