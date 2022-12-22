@@ -39,8 +39,8 @@ namespace SettingsHelperTest
 
             // Test CalcSheet.cs
             {
-                string exampleWorkbook = "C:\\Users\\Tanner.Hollis\\source\\repos\\SettingsHelperTest\\Example_Settings_Calc_Sheet.xlsx";
-
+                string exampleWorkbook = "Example_Settings_Calc_Sheet.xlsx";
+                exampleWorkbook = Path.Combine(Directory.GetCurrentDirectory(), exampleWorkbook);
                 CalcSheet calcSheet = new CalcSheet(exampleWorkbook);
 
                 calcSheet.PrintNames();

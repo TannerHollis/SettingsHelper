@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Lookups\originalWordBits.json" />
     <None Include="Lookups\sel_351-7.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

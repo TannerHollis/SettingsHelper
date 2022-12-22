@@ -84,12 +84,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Lookups\originalWordBits.json">
+      <Link>Lookups\originalWordBits.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\Lookups\sel_351-7.json">
       <Link>Lookups\sel_351-7.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />
-    <None Include="Example_Settings_Calc_Sheet.xlsx" />
+    <None Include="Example_Settings_Calc_Sheet.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Template.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
