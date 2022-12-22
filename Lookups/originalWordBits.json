@@ -17,11 +17,9 @@
     "PRSCONTACTEMAIL",
     "PRSCONTACTPHONE",
 
-    // Relay Type
     "RLYTYPE",
     "SITERATING_kVA",
 
-    // Globals
     "FREQ",
     "ROT",
     "SYSTEMVOLTAGE_LL",
@@ -31,8 +29,6 @@
     "CTRSEC",
     "VNOM",
 
-    // Group Elements
-    //  Voltage
     "27P1P",
     "27P1D",
     "27P2P",
@@ -44,7 +40,6 @@
     "59N1P",
     "59N1D",
 
-    //  Frequency
     "81U1P",
     "81U1D",
     "81U2P",
@@ -54,7 +49,6 @@
     "81O2P",
     "81O2D",
 
-    //  Instantaneous Overcurrent
     "50P1P",
     "50P2D",
     "50P2P",
@@ -70,7 +64,6 @@
     "50G3P",
     "50G3D",
 
-    //  Time Overcurrent
     "51P1P",
     "51P1C",
     "51P1TD",
@@ -96,7 +89,6 @@
     "51G2TA",
     "51G2R",
 
-    //  Power
     "PWR1P",
     "3PWR1P",
     "PWR1T",

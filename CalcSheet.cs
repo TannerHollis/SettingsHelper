@@ -15,7 +15,7 @@ namespace SettingsHelper
         private Application _excelApp;
         private Workbook _workbook;
 
-        private const string _acceptedWordBitsFileName = "originalWordBits.json";
+        private const string _acceptedWordBitsFileName = "Lookups\\originalWordBits.json";
         private List<string> _acceptedWordBits;
 
         public CalcSheet(string fileName) 
@@ -35,7 +35,16 @@ namespace SettingsHelper
 
             JsonNode js = JsonObject.Parse(file);
 
-            _acceptedWordBits = js["originalWordBits"].GetValue<List<string>>();
+            JsonNode jsonWordBits = js["originalWordBits"];
+
+            List<string> words = new List<string>();
+
+            foreach (string word in jsonWordBits.AsArray())
+            {
+                words.Add(word);
+            }
+
+            _acceptedWordBits = words;
         }
 
         public void PrintNames()
@@ -47,15 +56,13 @@ namespace SettingsHelper
                 {
                     Console.WriteLine(name.Name + ": " + name.RefersToRange.Text);
                 }
-
-                // Range range = name.RefersToRange;
-                // Console.WriteLine(" - " + range.Text);
             }
         }
 
         public void Close()
         {
             _workbook.Close();
+            _excelApp.Quit();
         }
     }
 }

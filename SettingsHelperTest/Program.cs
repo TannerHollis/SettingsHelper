@@ -15,9 +15,18 @@ namespace SettingsHelperTest
             // Test SettingsGroup.cs
             {
                 string exampleFile = "Set_G1.txt";
+                bool testPass;
+
+                // Open file and write to PHROT
                 SettingsGroup settingGroup1 = new SettingsGroup(exampleFile);
                 settingGroup1["PHROT"].SetSetting("BCA");
                 settingGroup1.WriteSettingsToFile();
+
+                // Read back PHROT setting and verify succeess
+                settingGroup1 = new SettingsGroup(exampleFile);
+                testPass = settingGroup1["PHROT"].GetSetting().Equals("BCA");
+
+                PrintTestPass("SettingsGroup.cs", testPass);
             }
 
             // Test SettingsTranslator.cs
@@ -47,6 +56,12 @@ namespace SettingsHelperTest
 
                 calcSheet.Close();
             }
+        }
+
+        private static void PrintTestPass(string testName, bool pass)
+        {
+            string printOut = "Test " + testName + ": " + (pass ? "SUCCESS" : "FAILURE") + "\n";
+            Console.WriteLine(printOut);
         }
     }
 }
