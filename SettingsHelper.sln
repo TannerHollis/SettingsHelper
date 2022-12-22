@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsHelper", "SettingsHelper.csproj", "{925F9B84-DA19-4A79-B3DF-CB037270E064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsHelperTest", "..\SettingsHelperTest\SettingsHelperTest.csproj", "{1A2246A7-B3D7-42EF-AED3-F67439A5682C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsHelperTest", "SettingsHelperTest\SettingsHelperTest.csproj", "{1A2246A7-B3D7-42EF-AED3-F67439A5682C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsHelperUI", "..\SettingsHelperUI\SettingsHelperUI.csproj", "{F408E977-8281-41AC-9129-00FB729FD56F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SettingsHelperUI", "SettingsHelperUI\SettingsHelperUI.csproj", "{F408E977-8281-41AC-9129-00FB729FD56F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

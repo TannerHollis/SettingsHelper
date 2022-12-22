@@ -19,18 +19,6 @@ namespace SettingsHelper
             LoadSettingsFromFile(_fileName);
         }
 
-        public Setting this[int index]
-        {
-            get
-            {
-                return _settings[index];
-            }
-            set
-            {
-                _settings[index] = value;
-            }
-        }
-
         public Setting this[string index]
         {
             get
@@ -41,19 +29,6 @@ namespace SettingsHelper
             {
                 _settings[LookupWordBitIndex(index)] = value;
             }
-        }
-
-        private int LookupWordBitIndex(string wordBit)
-        {
-            int ret = -1;
-            for(int i = 0; i < _settings.Count; i++)
-            {
-                if (_settings[i].WordBitEquals(wordBit))
-                {
-                    ret = i; break;
-                }
-            }
-            return ret;
         }
 
         public void WriteSettingsToFile()
@@ -75,6 +50,19 @@ namespace SettingsHelper
             }
 
             File.WriteAllLines(fileName, lines);
+        }
+
+        private int LookupWordBitIndex(string wordBit)
+        {
+            int ret = -1;
+            for (int i = 0; i < _settings.Count; i++)
+            {
+                if (_settings[i].WordBitEquals(wordBit))
+                {
+                    ret = i; break;
+                }
+            }
+            return ret;
         }
 
         private List<Setting> GetChangedSettings()
