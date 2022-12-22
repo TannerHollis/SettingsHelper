@@ -26,7 +26,6 @@ namespace SettingsHelper
             JsonNode js = _jsonNode;
             JsonNode ret;
 
-            // TODO: Add lookup wordbit function
             switch(genericWordBit)
             {
                 case "FREQ":
@@ -73,8 +72,10 @@ namespace SettingsHelper
                     ret = js["group"]["voltage"]["59P1D"];
                     break;
 
+                // TODO: Complete the switch case tree for all origninal WordBits
+
                 default:
-                    ret = js["NA"];
+                    ret = null;
                     break;
             }
 
