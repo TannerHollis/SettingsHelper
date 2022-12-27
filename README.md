@@ -13,8 +13,10 @@ The "original" WordBit is then fed to a WordBit translator where the specific re
 ## TODO
 
  - Finalize translation layer `SettingsTranslator.cs`
- - Finalize Settings Group functions in `SettingsGroup.cs`
+ - ~Finalize Settings Group functions in `SettingsGroup.cs`~
  - Finalize Settings Basis Template
+	- Finalize named "Tags"
+	- Finalize setting basis tabs
  - Finalize User Interface
  - Create different relay type Lookup Tables
 	 - SEL 351
@@ -28,4 +30,4 @@ The "original" WordBit is then fed to a WordBit translator where the specific re
 	 - SEL 751
 	 - SEL 751A
 	 - SEL 851
- - Create a method for temporarily extracting and compressing the **.rdb** files for a more advanced automation
+ - ~Create a method for temporarily extracting and compressing the **.rdb** files for a more advanced automation~
