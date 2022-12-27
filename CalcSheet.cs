@@ -59,6 +59,21 @@ namespace SettingsHelper
             }
         }
 
+        public string GetName(string name)
+        {
+            string ret = "";
+            Names workBookNames = _workbook.Names;
+            foreach(Name workBookName in workBookNames)
+            {
+                if(workBookName.Name.Equals(name))
+                {
+                    ret = workBookName.RefersToRange.Text;
+                    break;
+                }
+            }
+            return ret;
+        }
+
         public void Close()
         {
             _workbook.Close();

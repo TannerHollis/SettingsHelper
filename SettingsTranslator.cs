@@ -97,6 +97,20 @@ namespace SettingsHelper
             }
         }
 
+        private string SetTimedElement(string value)
+        {
+            JsonNode js = _jsonNode;
+            if (js["logic"]["timerCycles"].GetValue<bool>())
+            {
+                return value;
+            }
+            else
+            {
+                double time = Double.Parse(value) / 60.0;
+                return time.ToString();
+            }
+        }
+
         public List<SettingChange> SetGenericSetting(string genericWordBit, string setting)
         {
             List<SettingChange> sc = new List<SettingChange>();

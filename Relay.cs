@@ -42,7 +42,12 @@ namespace SettingsHelper
 
         public string[] GetGroupNames()
         {
-            return _groupNames;
+            List<string> groupNames = new List<string>();
+            foreach (SettingsGroup group in _groups)
+            {
+                groupNames.Add(group.GetFileName());
+            }
+            return groupNames.ToArray();
         }
 
         public SettingsGroup this[string index]
@@ -105,6 +110,21 @@ namespace SettingsHelper
             foreach(SettingsGroup group in _groups)
             {
                 group.WriteSettingsToFile();
+            }
+        }
+
+        public void SetSetting(string wordBit, string setting)
+        {
+            foreach(SettingsGroup group in _groups)
+            {
+                try
+                {
+                    group[wordBit].SetSetting(setting);
+                }
+                catch
+                {
+                    // Do nothing...
+                }
             }
         }
 

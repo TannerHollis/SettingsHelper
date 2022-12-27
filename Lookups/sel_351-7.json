@@ -24,7 +24,8 @@
       "dropoutFormat": "SV{0,0:D1}DO",
       "timerMaxCycles": 999999.00
     },
-    "logicVariables": true
+    "logicVariables": true,
+    "timerCycles": true
   },
 
   "group": {

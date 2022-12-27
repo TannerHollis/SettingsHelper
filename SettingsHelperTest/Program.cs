@@ -66,16 +66,21 @@ namespace SettingsHelperTest
 
             // Test CalcSheet.cs
             {
+                
                 string exampleWorkbook = "Example_Settings_Calc_Sheet.xlsx";
                 exampleWorkbook = Path.Combine(Directory.GetCurrentDirectory(), exampleWorkbook);
                 CalcSheet calcSheet = new CalcSheet(exampleWorkbook);
 
+                bool testPass = Double.Parse(calcSheet.GetName("CTR")) == 120.0;
+
                 calcSheet.PrintNames();
 
                 calcSheet.Close();
+
+                PrintTestPass("CalcSheet.cs", testPass);
             }
 
-            // Test Relay.cs
+            // Test Relay.cs, includes testing of CFFolder.cs
             {
                 string relayFile = "SEL-351S.rdb";
 
@@ -98,6 +103,7 @@ namespace SettingsHelperTest
                 }
 
                 relay["SET_1.TXT"]["RID"].SetSetting("TEST SETTINGS 1...");
+                relay.SetSetting("Z1MAG", "12.34");
 
                 relay.CompressRelayFiles();
 
