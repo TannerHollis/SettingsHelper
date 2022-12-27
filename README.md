@@ -9,11 +9,12 @@ To Start, a simple excel spreadsheet with equations and setpoints determined by 
 
 ![Calculation Sheet](documentation/images/calc_sheet.png)
 
-The "original" WordBit is then fed to a WordBit translator where the specific relay type is used to lookup the relay specific WordBit. This data is then passed to the `SettingsGroup.cs` class where one can set the appropriate settings parsed from the relay's export function. Once all settings are set, the relay files can then be imported.
+The "original" WordBit is then fed to a WordBit translator where the specific relay type is used to lookup the relay specific WordBit. This data is then passed to the `Relay.cs` class where one can set the appropriate settings parsed from the relay's export function. Once all settings are set, the relay files can then be imported.
 ## TODO
 
  - Finalize translation layer `SettingsTranslator.cs`
  - ~Finalize Settings Group functions in `SettingsGroup.cs`~
+ - Finalize relay functions in `Relay.cs`
  - Finalize Settings Basis Template
 	- Finalize named "Tags"
 	- Finalize setting basis tabs
@@ -31,3 +32,4 @@ The "original" WordBit is then fed to a WordBit translator where the specific re
 	 - SEL 751A
 	 - SEL 851
  - ~Create a method for temporarily extracting and compressing the **.rdb** files for a more advanced automation~
+	- ~Using OpenMCDF~
