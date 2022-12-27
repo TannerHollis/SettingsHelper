@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using OpenMcdf;
 
 namespace SettingsHelper
 {
     public class SettingsGroup
     {
         private string _fileName;
+
+        private string[] _lines;
 
         public List<Setting> _settings;
         
@@ -31,6 +34,11 @@ namespace SettingsHelper
             }
         }
 
+        public string[] GetLines()
+        {
+            return _lines;
+        }
+
         public string GetFileName()
         {
             return Path.GetFileName(_fileName);
@@ -38,23 +46,19 @@ namespace SettingsHelper
 
         public void WriteSettingsToFile()
         {
-            string fileName = _fileName;
-
-            string[] lines = File.ReadAllLines(fileName);
-
             List<Setting> changedSettings = GetChangedSettings();
 
-            Console.WriteLine("Writing " + changedSettings.Count + " change(s) to file: " + fileName);
+            Console.WriteLine("Writing " + changedSettings.Count + " change(s) to file: " + _fileName);
 
             foreach (Setting setting in changedSettings)
             {
                 Console.WriteLine(" - Writing setting: " + setting.GetWordbit());
 
                 int lineIndex = setting.GetLineIndex();
-                lines[lineIndex] = setting.ToString();
+                _lines[lineIndex] = setting.ToString();
             }
 
-            File.WriteAllLines(fileName, lines);
+            File.WriteAllLines(_fileName, _lines);
         }
 
         private int LookupWordBitIndex(string wordBit)
@@ -105,6 +109,7 @@ namespace SettingsHelper
             }
 
             _settings = settings;
+            _lines = lines;
         }
     }
 }

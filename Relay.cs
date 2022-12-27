@@ -8,20 +8,22 @@ using System.Threading.Tasks;
 
 using SevenZip.Compression.LZMA;
 
+using OpenMcdf;
+using System.Security.Cryptography;
+
 namespace SettingsHelper
 {
     public class Relay
     {
         private string _fileName;
+        private CompoundFile _compoundFile;
+        private CFFolder _cfFolder;
         public List<SettingsGroup> _groups;
         private string[] _groupNames;
 
         private string[] _relays;
 
-        private string _7ZExtractArguments = "x \"{0}\" -otemp -r -y";
-        private string _7ZCompressArguments = "a \"{0}\" .\\temp\\* -y";
-
-        public Relay(string fileName) 
+        public Relay(string fileName)
         {
             _fileName = fileName;
             _groups = new List<SettingsGroup>();
@@ -90,9 +92,11 @@ namespace SettingsHelper
                 Directory.CreateDirectory("temp");
             }
 
-            string command = String.Format(_7ZExtractArguments, fileName);
-            ExecuteCommand(command);
-
+            CompoundFile cf = new CompoundFile(fileName);
+            CFFolder root = new CFFolder(null, cf.RootStorage, cf);
+            root.ExtractTo("temp");
+            _compoundFile = cf;
+            _cfFolder = root;
             _relays = Directory.GetDirectories("temp\\Relays");
         }
 
@@ -108,25 +112,22 @@ namespace SettingsHelper
         {
             WriteAllGroups();
 
-            string command = String.Format(_7ZCompressArguments, _fileName);
+            foreach(SettingsGroup group in _groups)
+            {
+                string[] lines = group.GetLines();
+                string linesJoined = string.Join("\r\n", lines);
+                byte[] bytes = Encoding.Default.GetBytes(linesJoined);
+                CFStream stream = _cfFolder.FindStream(group.GetFileName(), true);
+                stream.SetData(bytes);
+            }
 
-            ExecuteCommand(command);
-            //Directory.Delete("temp", true);
+            string pathName = Path.Combine(Directory.GetCurrentDirectory(), "temp");
+            Directory.Delete(pathName, true);
         }
 
-        private void ExecuteCommand(string arguments)
+        public void Save(string fileName)
         {
-            ProcessStartInfo processInfo;
-
-            processInfo = new ProcessStartInfo();
-            processInfo.FileName = "7z.exe ";
-            processInfo.Arguments = arguments;
-            processInfo.UseShellExecute = false;
-            processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-            Process process = Process.Start(processInfo);
-            process.WaitForExit();
-            Console.WriteLine("Process ended with: " + process.ExitCode);
+            _compoundFile.Save(fileName);
         }
     }
 }

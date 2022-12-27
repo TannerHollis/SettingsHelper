@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using SettingsHelper;
 
+using OpenMcdf;
+using System.Windows.Forms.VisualStyles;
+
 namespace SettingsHelperTest
 {
     internal class Program
@@ -97,6 +100,8 @@ namespace SettingsHelperTest
                 relay["SET_1.TXT"]["RID"].SetSetting("TEST SETTINGS 1...");
 
                 relay.CompressRelayFiles();
+
+                relay.Save("SEL-351S_New.rdb");
             }
         }
 

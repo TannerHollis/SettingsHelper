@@ -21,7 +21,7 @@ namespace SettingsHelper
         public CalcSheet(string fileName) 
         {
             _fileName = fileName;
-            _excelApp= new Application();
+            _excelApp = new Application();
             _workbook = _excelApp.Workbooks.Open(fileName);
             _excelApp.Visible = false;
 
