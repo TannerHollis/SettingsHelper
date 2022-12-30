@@ -17,5 +17,15 @@ namespace SettingsHelper
             _wordBit = wordBit;
             _setting = setting;
         }
+
+        public string WordBit
+        {
+            get { return _wordBit; }
+        }
+
+        public string Setting
+        {
+            get { return _setting; }
+        }
     }
 }

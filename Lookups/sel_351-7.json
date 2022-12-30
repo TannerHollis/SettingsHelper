@@ -1,5 +1,5 @@
 {
-  "relayType": "SEL-351-7",
+  "relayType": "SEL 351-7",
 
   "global": {
     "FREQ": "NFREQ",
@@ -125,6 +125,13 @@
       "pickup": "HBL2P",
       "pickupDelay": "HBL2PU",
       "dropoutDelay": "HBL2DO"
+    },
+
+    "directional": {
+      "enable": "E32",
+      "order": "ORDER",
+      "forward": "32PF",
+      "reverse": "32PR"
     },
 
     "voltage": {

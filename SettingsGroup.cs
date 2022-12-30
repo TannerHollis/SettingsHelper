@@ -44,20 +44,19 @@ namespace SettingsHelper
             return Path.GetFileName(_fileName);
         }
 
-        public void WriteSettingsToFile()
+        public void ApplySettingChanges()
         {
             List<Setting> changedSettings = GetChangedSettings();
 
-            Console.WriteLine("Writing " + changedSettings.Count + " change(s) to file: " + _fileName);
-
             foreach (Setting setting in changedSettings)
             {
-                Console.WriteLine(" - Writing setting: " + setting.GetWordbit());
-
-                int lineIndex = setting.GetLineIndex();
+                int lineIndex = setting.LineIndex;
                 _lines[lineIndex] = setting.ToString();
             }
-
+        }
+        
+        public void WriteSettingsToFile()
+        {
             File.WriteAllLines(_fileName, _lines);
         }
 
@@ -80,7 +79,7 @@ namespace SettingsHelper
 
             foreach (Setting setting in _settings)
             {
-                if (setting.HasChanged())
+                if (setting.HasChanged)
                 {
                     changedSettings.Add(setting);
                 }

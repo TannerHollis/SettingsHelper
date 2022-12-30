@@ -12,6 +12,7 @@ namespace SettingsHelper
 {
     public class CFFolder
     {
+        private int _index;
         private CFStorage _parent;
 
         private CFStorage _storage;
@@ -22,6 +23,10 @@ namespace SettingsHelper
 
         public CFFolder(CFStorage parent, CFStorage storage, CompoundFile compoundFile)
         {
+            if(parent == null)
+            {
+                _index = 0;
+            }
             _parent = parent;
             _storage = storage;
 
@@ -43,6 +48,7 @@ namespace SettingsHelper
                     if(cfStorage != null)
                     {
                         CFFolder folder = new CFFolder(_storage, cfStorage, cf);
+                        folder.Index = _index + 1;
                         _folders.Add(folder);
                     }
                 }
@@ -58,6 +64,17 @@ namespace SettingsHelper
         }
 
         public CFStorage Parent { get { return _parent; } }
+
+        public CFStorage Storage
+        {
+            get { return _storage; }
+        }
+
+        public int Index
+        {
+            get { return _index; }
+            set { _index = value; }
+        }
 
         public List<CFFolder> Folders
         {
@@ -80,7 +97,6 @@ namespace SettingsHelper
             if(!_storage.IsRoot)
             {
                 pathName = Path.Combine(path, _storage.Name);
-                Console.WriteLine("Extracting folder: " + pathName);
             }
             if (!Directory.Exists(pathName))
             {
@@ -90,7 +106,6 @@ namespace SettingsHelper
             foreach (CFStream stream in _files)
             {
                 string fileName = Path.Combine(pathName, stream.Name);
-                Console.WriteLine(" Extracting file: " + fileName);
                 byte[] bytes = stream.GetData();
                 File.WriteAllBytes(fileName, bytes);
             }
@@ -103,36 +118,56 @@ namespace SettingsHelper
 
         public CFStream FindStream(string name, bool recursive)
         {
-            CFStream stream = null;
             foreach(CFStream file in _files)
             {
                 if(file.Name.Equals(name))
                 {
-                    stream = file;
-                    break;
+                    return file;
                 }
-            }
-
-            if(stream != null)
-            {
-                return stream;
             }
 
             if(!recursive)
             {
-                return stream;
+                return null;
             }
 
             foreach(CFFolder folder in _folders)
             {
-                stream = folder.FindStream(name, recursive);
+                CFStream stream = folder.FindStream(name, recursive);
                 if(stream != null)
                 {
                     return stream;
                 }
             }
 
-            return stream;
+            return null;
+        }
+
+        public CFFolder FindFolder(string name, bool recursive)
+        {
+            foreach (CFFolder folder in _folders)
+            {
+                if (folder.Storage.Name.Equals(name))
+                {
+                    return folder;
+                }
+            }
+
+            if (!recursive)
+            {
+                return null;
+            }
+
+            foreach (CFFolder folder in _folders)
+            {
+                CFFolder storage = folder.FindFolder(name, recursive);
+                if (storage != null)
+                {
+                    return storage;
+                }
+            }
+
+            return null;
         }
     }
 }

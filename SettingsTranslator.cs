@@ -18,9 +18,9 @@ namespace SettingsHelper
         public SettingsTranslator(string relayType)
         {
             _relayType = relayType;
-            LoadJsonFile(relayType);
+            _jsonNode = LoadTranslationFile();
         }
-        
+
         public string LookupWordBit(string genericWordBit)
         {
             JsonNode js = _jsonNode;
@@ -48,36 +48,76 @@ namespace SettingsHelper
                     ret = js["global"]["VNOM"]["wordBit"];
                     break;
 
-                case "27P1P":
+                case "V27P1P":
                     ret = js["group"]["voltage"]["27P1P"];
                     break;
 
-                case "27P1D":
+                case "V27P1D":
                     ret = js["group"]["voltage"]["27P1D"];
                     break;
 
-                case "27P2P":
+                case "V27P2P":
                     ret = js["group"]["voltage"]["27P2P"];
                     break;
 
-                case "27P2D":
+                case "V27P2D":
                     ret = js["group"]["voltage"]["27P2D"];
                     break;
 
-                case "59P1P":
+                case "V59P1P":
                     ret = js["group"]["voltage"]["59P1P"];
                     break;
 
-                case "59P1D":
+                case "V59P1D":
                     ret = js["group"]["voltage"]["59P1D"];
                     break;
 
-                case "59P2P":
+                case "V59P2P":
                     ret = js["group"]["voltage"]["59P2P"];
                     break;
 
-                case "59P2D":
+                case "V59P2D":
                     ret = js["group"]["voltage"]["59P2D"];
+                    break;
+
+                case "F81U1P":
+                    ret = js["group"]["frequency"]["81U1P"];
+                    break;
+
+                case "F81U1D":
+                    ret = js["group"]["frequency"]["81U1D"];
+                    break;
+
+                case "F81U1DEX":
+                    ret = js["group"]["frequency"]["81U1DEX"];
+                    break;
+
+                case "F81U2P":
+                    ret = js["group"]["frequency"]["81U2P"];
+                    break;
+
+                case "F81U2D":
+                    ret = js["group"]["frequency"]["81U2D"];
+                    break;
+
+                case "F81O1P":
+                    ret = js["group"]["frequency"]["81O1P"];
+                    break;
+
+                case "F81O1D":
+                    ret = js["group"]["frequency"]["81O1D"];
+                    break;
+
+                case "F81O1DEX":
+                    ret = js["group"]["frequency"]["81O1DEX"];
+                    break;
+
+                case "F81O2P":
+                    ret = js["group"]["frequency"]["81O2P"];
+                    break;
+
+                case "F81O2D":
+                    ret = js["group"]["frequency"]["81O2D"];
                     break;
 
                 // TODO: Complete the switch case tree for all origninal WordBits
@@ -87,14 +127,7 @@ namespace SettingsHelper
                     break;
             }
 
-            if(ret != null)
-            {
-                return ret.GetValue<string>();
-            }
-            else
-            {
-                return "NOT_FOUND";
-            }
+            return (ret != null) ? ret.GetValue<string>() : "NOT_FOUND";
         }
 
         private string SetTimedElement(string value)
@@ -115,20 +148,16 @@ namespace SettingsHelper
         {
             List<SettingChange> sc = new List<SettingChange>();
 
+            // TODO: Create method to set setting with generic WordBit and setting
 
             return sc;
         }
 
-        private void LoadJsonFile(string relayType)
+        private JsonNode LoadTranslationFile()
         {
-            // format relayType to lowercase and replace spaces with underscores
-            string relayTypeLookupFileName = "Lookups\\" + relayType.ToLower().Replace(' ', '_') + ".json";
+            string translationLayerFileName = FileManager.GetTranslationLayerFile(_relayType);
 
-            // Append .json file type and open to filestream
-            FileStream file = File.OpenRead(relayTypeLookupFileName);
-
-            // Parse filestream and return .json object node
-            _jsonNode = JsonObject.Parse(file);
+            return FileManager.LoadJsonFile(translationLayerFileName);
         }
     }
 }

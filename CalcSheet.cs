@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -15,48 +16,12 @@ namespace SettingsHelper
         private Application _excelApp;
         private Workbook _workbook;
 
-        private const string _acceptedWordBitsFileName = "Lookups\\originalWordBits.json";
-        private List<string> _acceptedWordBits;
-
         public CalcSheet(string fileName) 
         {
             _fileName = fileName;
             _excelApp = new Application();
             _workbook = _excelApp.Workbooks.Open(fileName);
-            _excelApp.Visible = false;
-
-            // Load accepted original word bits .json file
-            GetAcceptedOriginalWordBits(_acceptedWordBitsFileName);
-        }
-
-        private void GetAcceptedOriginalWordBits(string fileName)
-        {
-            FileStream file = File.OpenRead(fileName);
-
-            JsonNode js = JsonObject.Parse(file);
-
-            JsonNode jsonWordBits = js["originalWordBits"];
-
-            List<string> words = new List<string>();
-
-            foreach (string word in jsonWordBits.AsArray())
-            {
-                words.Add(word);
-            }
-
-            _acceptedWordBits = words;
-        }
-
-        public void PrintNames()
-        {
-            Names names = _workbook.Names;
-            foreach (Name name in names)
-            {
-                if (_acceptedWordBits.Contains(name.Name))
-                {
-                    Console.WriteLine(name.Name + ": " + name.RefersToRange.Text);
-                }
-            }
+            _excelApp.Visible = true;
         }
 
         public string GetName(string name)
@@ -76,8 +41,10 @@ namespace SettingsHelper
 
         public void Close()
         {
-            _workbook.Close();
+            _workbook.Close(false);
             _excelApp.Quit();
+            while (Marshal.ReleaseComObject(_excelApp) != 0) { }
+            while (Marshal.ReleaseComObject(_workbook) != 0) { }
         }
     }
 }

@@ -90,8 +90,24 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Lookups\originalWordBits.json">
-      <Link>Lookups\originalWordBits.json</Link>
+    <None Include="..\Lookups\genericWordBits.json">
+      <Link>Lookups\genericWordBits.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Lookups\RDB Templates\SEL 351-7.rdb">
+      <Link>Lookups\RDB Templates\SEL 351-7.rdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Lookups\RDB Templates\SEL 351A.rdb">
+      <Link>Lookups\RDB Templates\SEL 351A.rdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Lookups\RDB Templates\SEL 351S.rdb">
+      <Link>Lookups\RDB Templates\SEL 351S.rdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Lookups\relayFiles.json">
+      <Link>Lookups\relayFiles.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\Lookups\sel_351-7.json">
@@ -122,4 +138,5 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions />
 </Project>

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SettingsHelper
 {
@@ -27,40 +22,38 @@ namespace SettingsHelper
             _hasChanged = false;
         }
 
-        public int GetLineIndex()
-        {
-            return _lineIndex;
+        public int LineIndex { get { return _lineIndex;} }
+
+        public string WordBit { get { return _wordBit;} }
+
+        public string Setpoint
+        { 
+            get 
+            { 
+                return _setting; 
+            } 
+            set
+            {
+                _hasChanged = !value.Equals(this._originalSetting);
+                _setting = value;
+            }
         }
 
-        public void SetSetting(string setting)
+        public void RevertSetting()
         {
-            _hasChanged = !setting.Equals(this._originalSetting);
-            _setting = setting;
+            Setpoint = _originalSetting;
         }
 
-        public string GetSetting()
-        {
-            return _setting;
-        }
-
-        public string GetWordbit()
-        {
-            return _wordBit;
-        }
-
-        public bool HasChanged()
-        {
-            return _hasChanged;
-        }
+        public bool HasChanged { get { return _hasChanged; } }
 
         override public string ToString()
         {
-            return _wordBit + ",\"" + _setting + "\"";
+            return WordBit + ",\"" + Setpoint + "\"";
         }
 
         public bool WordBitEquals(string a)
         {
-            return a.Equals(this._wordBit);
+            return a.Equals(WordBit);
         }
 
         static public Setting FromLine(int lineIndex, String line)

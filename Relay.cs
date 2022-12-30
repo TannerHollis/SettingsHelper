@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
-using SevenZip.Compression.LZMA;
-
 using OpenMcdf;
-using System.Security.Cryptography;
 
 namespace SettingsHelper
 {
     public class Relay
     {
         private string _fileName;
+        private int _selectedIndex;
+        private string _relayName;
         private CompoundFile _compoundFile;
         private CFFolder _cfFolder;
         public List<SettingsGroup> _groups;
-        private string[] _groupNames;
 
         private string[] _relays;
 
@@ -28,6 +22,11 @@ namespace SettingsHelper
             _fileName = fileName;
             _groups = new List<SettingsGroup>();
             ExtractRelayFiles(fileName);
+        }
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
         }
 
         public string[] GetRelayNames()
@@ -75,19 +74,18 @@ namespace SettingsHelper
             return ret;
         }
 
-        public void LoadRelay(int index)
+        public void Load(int index)
         {
+            _selectedIndex = index;
+            _relayName = GetRelayNames()[index];
+
             _groups= new List<SettingsGroup>();
-            List<string> groupNames = new List<string>();
 
             string[] textFiles = Directory.GetFiles(_relays[index], "*.txt");
             foreach(string textFile in textFiles)
             {
                 _groups.Add(new SettingsGroup(textFile));
-                groupNames.Add(textFile);
             }
-
-            _groupNames = groupNames.ToArray();
         }
 
         private void ExtractRelayFiles(string fileName)
@@ -95,6 +93,10 @@ namespace SettingsHelper
             if(!Directory.Exists("temp")) 
             {
                 Directory.CreateDirectory("temp");
+            }
+            else
+            {
+                Directory.Delete("temp", true);
             }
 
             CompoundFile cf = new CompoundFile(fileName);
@@ -105,32 +107,47 @@ namespace SettingsHelper
             _relays = Directory.GetDirectories("temp\\Relays");
         }
 
-        private void WriteAllGroups()
+        public void Rename(string name)
+        {
+            _cfFolder.FindFolder(_relayName, true).Parent.RenameItem(_relayName, name);
+            _cfFolder.FindStream("Device.txt", true).SetData(Encoding.Default.GetBytes(name));
+            _relayName = name;
+        }
+
+        private void ApplySettingsChanges()
         {
             foreach(SettingsGroup group in _groups)
             {
-                group.WriteSettingsToFile();
+                group.ApplySettingChanges();
             }
         }
 
-        public void SetSetting(string wordBit, string setting)
+        public void MergeSettingsChanges(List<SettingChange> settingChanges)
+        {
+            foreach(SettingChange change in settingChanges)
+            {
+                SetSetting(change.WordBit, change.Setting);
+            }
+        }
+
+        private void SetSetting(string wordBit, string setting)
         {
             foreach(SettingsGroup group in _groups)
             {
                 try
                 {
-                    group[wordBit].SetSetting(setting);
+                    group[wordBit].Setpoint = setting;
                 }
                 catch
                 {
-                    // Do nothing...
+                    Console.WriteLine("ERROR: Could not find wordBit: " + wordBit);
                 }
             }
         }
 
         public void CompressRelayFiles()
         {
-            WriteAllGroups();
+            ApplySettingsChanges();
 
             foreach(SettingsGroup group in _groups)
             {
@@ -140,14 +157,17 @@ namespace SettingsHelper
                 CFStream stream = _cfFolder.FindStream(group.GetFileName(), true);
                 stream.SetData(bytes);
             }
-
-            string pathName = Path.Combine(Directory.GetCurrentDirectory(), "temp");
-            Directory.Delete(pathName, true);
         }
 
         public void Save(string fileName)
         {
             _compoundFile.Save(fileName);
+        }
+
+        public void Close()
+        {
+            string pathName = Path.Combine(Directory.GetCurrentDirectory(), "temp");
+            Directory.Delete(pathName, true);
         }
     }
 }
