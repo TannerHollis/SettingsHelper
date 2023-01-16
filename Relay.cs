@@ -132,16 +132,24 @@ namespace SettingsHelper
 
         private void SetSetting(string wordBit, string setting)
         {
+            List<bool> setSuccess = new List<bool>();
             foreach(SettingsGroup group in _groups)
             {
                 try
                 {
                     group[wordBit].Setpoint = setting;
+                    setSuccess.Add(true);
+                    FileManager.Log("WordBit: " + wordBit + " set to: " + setting + " in " + group.GetFileName(), FileManager.LogLevel.Info);
                 }
                 catch
                 {
-                    Console.WriteLine("ERROR: Could not find wordBit: " + wordBit);
+                    // Do nothing...
                 }
+            }
+
+            if (setSuccess.Count == 0)
+            {
+                FileManager.Log("Couldn't find wordBit: " + wordBit, FileManager.LogLevel.Error);
             }
         }
 

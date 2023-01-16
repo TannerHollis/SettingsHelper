@@ -62,12 +62,31 @@ namespace SettingsHelper
         {
             List<SettingChange> settingChanges = new List<SettingChange>();
 
-            string[] genericWordBits = FileManager.GetOriginalWordBits();
+            string[] genericWordBits = FileManager.GetGenericWordBits();
+
             foreach(string genericWordBit in genericWordBits)
             {
                 string setting = _calcSheet.GetName(genericWordBit);
+                if (setting.Equals(string.Empty))
+                {
+                    FileManager.Log("Could not get Tag: " + genericWordBit + " from calc sheet.", FileManager.LogLevel.Warning);
+                    continue;
+                }
                 List<SettingChange> changes = _settingsTranslator.SetGenericSetting(genericWordBit, setting);
                 settingChanges.AddRange(changes);
+            }
+
+            string[] complexWordBits = FileManager.GetComplexWordBits();
+
+            foreach(string complexWordBit in complexWordBits)
+            {
+                string setting = _calcSheet.GetName(complexWordBit);
+                if (setting.Equals(string.Empty))
+                {
+                    FileManager.Log("Could not get Tag: " + complexWordBit + " from calc sheet.", FileManager.LogLevel.Warning);
+                    continue;
+                }
+                FileManager.Log(complexWordBit, FileManager.LogLevel.Info);
             }
 
             return settingChanges;

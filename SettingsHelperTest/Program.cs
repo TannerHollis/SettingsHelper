@@ -34,6 +34,16 @@ namespace SettingsHelperTest
                 PrintTestPass("SettingsGroup.cs", testPass);
             }
 
+            // Test RelayLookup.cs
+            {
+                string jsonFile = "Lookups\\sel_351-7.json";
+                RelayLookup relayLookup = RelayLookup.FromFile(jsonFile);
+                relayLookup.ToFile("test.json");
+
+                FileManager.Log("This is a test 0", FileManager.LogLevel.Debug);
+                FileManager.Log("This is a test 1", FileManager.LogLevel.Warning);
+            }
+
             // Test SettingsTranslator.cs
             {
                 bool testPass = true;
@@ -76,6 +86,10 @@ namespace SettingsHelperTest
 
                 // Try to get named tag: "CTR" which should be 120.0
                 bool testPass = Double.Parse(calcSheet.GetName("CTR")) == 120.0;
+
+                // Change named tag and save
+                calcSheet.SetName("CUSTCONTACTNAME", "Tanner Hollis");
+                calcSheet.Save();
 
                 calcSheet.Close();
 

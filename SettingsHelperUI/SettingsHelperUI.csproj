@@ -55,16 +55,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -75,6 +75,26 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="..\Lookups\genericWordBits.json">
+      <Link>Lookups\genericWordBits.json</Link>
+    </None>
+    <None Include="..\Lookups\RDB Templates\SEL 351-7.rdb">
+      <Link>Lookups\RDB Templates\SEL 351-7.rdb</Link>
+    </None>
+    <None Include="..\Lookups\RDB Templates\SEL 351A.rdb">
+      <Link>Lookups\RDB Templates\SEL 351A.rdb</Link>
+    </None>
+    <None Include="..\Lookups\RDB Templates\SEL 351S.rdb">
+      <Link>Lookups\RDB Templates\SEL 351S.rdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Lookups\relayFiles.json">
+      <Link>Lookups\relayFiles.json</Link>
+    </None>
+    <None Include="..\Lookups\sel_351-7.json">
+      <Link>Lookups\sel_351-7.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -89,7 +109,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SettingsHelper.csproj">
+      <Project>{925f9b84-da19-4a79-b3df-cb037270e064}</Project>
+      <Name>SettingsHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\icon.ico" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,127 +14,128 @@ namespace SettingsHelper
     public class SettingsTranslator
     {
         private string _relayType;
-        private JsonNode _jsonNode;
+        private RelayLookup _relayLookup;
 
         public SettingsTranslator(string relayType)
         {
             _relayType = relayType;
-            _jsonNode = LoadTranslationFile();
+            _relayLookup = RelayLookup.FromFile(FileManager.GetTranslationLayerFile(_relayType));
         }
 
         public string LookupWordBit(string genericWordBit)
         {
-            JsonNode js = _jsonNode;
-            JsonNode ret;
+            string ret = string.Empty;
+
+            RelayLookup rl = _relayLookup;
 
             switch(genericWordBit)
             {
                 case "FREQ":
-                    ret = js["global"]["FREQ"];
+                    ret = rl.global.FREQ;
                     break;
 
                 case "ROT":
-                    ret = js["global"]["ROT"];
+                    ret = rl.global.ROT;
                     break;
 
                 case "PTR":
-                    ret = js["global"]["PTR"];
+                    ret = rl.global.PTR;
                     break;
 
                 case "CTR":
-                    ret = js["global"]["CTR"];
+                    ret = rl.global.CTR;
                     break;
 
                 case "VNOM":
-                    ret = js["global"]["VNOM"]["wordBit"];
+                    ret = rl.global.VNOM.wordBit;
                     break;
 
                 case "V27P1P":
-                    ret = js["group"]["voltage"]["27P1P"];
+                    ret = rl.group.voltage.V27P1.pickup;
                     break;
 
                 case "V27P1D":
-                    ret = js["group"]["voltage"]["27P1D"];
+                    ret = rl.group.voltage.V27P1.delay;
                     break;
 
                 case "V27P2P":
-                    ret = js["group"]["voltage"]["27P2P"];
+                    ret = rl.group.voltage.V27P2.pickup;
                     break;
 
                 case "V27P2D":
-                    ret = js["group"]["voltage"]["27P2D"];
+                    ret = rl.group.voltage.V27P2.delay;
                     break;
 
                 case "V59P1P":
-                    ret = js["group"]["voltage"]["59P1P"];
+                    ret = rl.group.voltage.V59P1.pickup;
                     break;
 
                 case "V59P1D":
-                    ret = js["group"]["voltage"]["59P1D"];
+                    ret = rl.group.voltage.V59P1.delay;
                     break;
 
                 case "V59P2P":
-                    ret = js["group"]["voltage"]["59P2P"];
+                    ret = rl.group.voltage.V59P2.pickup;
                     break;
 
                 case "V59P2D":
-                    ret = js["group"]["voltage"]["59P2D"];
+                    ret = rl.group.voltage.V59P2.delay;
                     break;
 
                 case "F81U1P":
-                    ret = js["group"]["frequency"]["81U1P"];
+                    ret = rl.group.frequency.F81U1.pickup;
                     break;
 
                 case "F81U1D":
-                    ret = js["group"]["frequency"]["81U1D"];
+                    ret = rl.group.frequency.F81U1.delay;
                     break;
 
                 case "F81U1DEX":
-                    ret = js["group"]["frequency"]["81U1DEX"];
+                    ret = rl.group.frequency.F81U1.delay2;
                     break;
 
                 case "F81U2P":
-                    ret = js["group"]["frequency"]["81U2P"];
+                    ret = rl.group.frequency.F81U2.pickup;
                     break;
 
                 case "F81U2D":
-                    ret = js["group"]["frequency"]["81U2D"];
+                    ret = rl.group.frequency.F81U2.delay;
                     break;
 
                 case "F81O1P":
-                    ret = js["group"]["frequency"]["81O1P"];
+                    ret = rl.group.frequency.F81O1.pickup;
                     break;
 
                 case "F81O1D":
-                    ret = js["group"]["frequency"]["81O1D"];
+                    ret = rl.group.frequency.F81O1.delay;
                     break;
 
                 case "F81O1DEX":
-                    ret = js["group"]["frequency"]["81O1DEX"];
+                    ret = rl.group.frequency.F81O1.delay2;
                     break;
 
                 case "F81O2P":
-                    ret = js["group"]["frequency"]["81O2P"];
+                    ret = rl.group.frequency.F81O2.pickup;
                     break;
 
                 case "F81O2D":
-                    ret = js["group"]["frequency"]["81O2D"];
+                    ret = rl.group.frequency.F81O2.delay;
                     break;
 
                 // TODO: Complete the switch case tree for all origninal WordBits
 
                 default:
-                    ret = null;
+                    ret = string.Empty;
                     break;
             }
 
-            return (ret != null) ? ret.GetValue<string>() : "NOT_FOUND";
+            return ret;
         }
 
         private string SetTimedElement(string value)
         {
-            JsonNode js = _jsonNode;
-            if (js["logic"]["timerCycles"].GetValue<bool>())
+            RelayLookup rl = _relayLookup;
+            if (rl.logic.timers.isCycles)
             {
                 return value;
             }
@@ -148,16 +150,50 @@ namespace SettingsHelper
         {
             List<SettingChange> sc = new List<SettingChange>();
 
-            // TODO: Create method to set setting with generic WordBit and setting
+            string[] genericWordBits = FileManager.GetGenericWordBits();
+
+            if(genericWordBits.Contains(genericWordBit))
+            {
+                sc.Add(GenericSettingChange(genericWordBit, setting));
+                return sc;
+            }
+
+            SettingChange sc1, sc2;
+            string delay1, delay2;
+
+            switch(genericWordBit)
+            {
+                case "V27P1D":
+                    delay1 = SetTimedElement(setting);
+                    sc1 = new SettingChange(genericWordBit, LookupWordBit(genericWordBit), delay1);
+                    sc.Add(sc1);
+                    break;
+
+                case "V27P2D":
+                    delay1 = SetTimedElement(setting);
+                    sc1 = new SettingChange(genericWordBit, LookupWordBit(genericWordBit), delay1);
+                    sc.Add(sc1);
+                    break;
+
+                case "V59P1P":
+                    delay1 = SetTimedElement(setting);
+                    sc1 = new SettingChange(genericWordBit, LookupWordBit(genericWordBit), delay1);
+                    sc.Add(sc1);
+                    break;
+
+
+                default:
+                    break;
+            }
+
+            // TODO: Add trip logic where trip logic is added incrementally. Adding elements to the trip equation.
 
             return sc;
         }
 
-        private JsonNode LoadTranslationFile()
+        private SettingChange GenericSettingChange(string genericWordBit, string setting)
         {
-            string translationLayerFileName = FileManager.GetTranslationLayerFile(_relayType);
-
-            return FileManager.LoadJsonFile(translationLayerFileName);
+            return new SettingChange(genericWordBit, LookupWordBit(genericWordBit), setting);
         }
     }
 }

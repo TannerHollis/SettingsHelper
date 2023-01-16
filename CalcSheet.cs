@@ -16,7 +16,7 @@ namespace SettingsHelper
         private Application _excelApp;
         private Workbook _workbook;
 
-        public CalcSheet(string fileName) 
+        public CalcSheet(string fileName)
         {
             _fileName = fileName;
             _excelApp = new Application();
@@ -26,11 +26,11 @@ namespace SettingsHelper
 
         public string GetName(string name)
         {
-            string ret = "";
+            string ret = string.Empty;
             Names workBookNames = _workbook.Names;
-            foreach(Name workBookName in workBookNames)
+            foreach (Name workBookName in workBookNames)
             {
-                if(workBookName.Name.Equals(name))
+                if (workBookName.Name.Equals(name))
                 {
                     ret = workBookName.RefersToRange.Text;
                     break;
@@ -39,12 +39,31 @@ namespace SettingsHelper
             return ret;
         }
 
+        public void SetName(string name, string value)
+        {
+            Names workBookNames = _workbook.Names;
+            foreach (Name workBookName in workBookNames)
+            {
+                if (workBookName.Name.Equals(name))
+                {
+                    Range range = workBookName.RefersToRange;
+                    range.Value2 = value;
+                    break;
+                }
+            }
+        }
+
+        public void Save()
+        {
+            _workbook.Save();
+        }
+
         public void Close()
         {
             _workbook.Close(false);
             _excelApp.Quit();
-            while (Marshal.ReleaseComObject(_excelApp) != 0) { }
             while (Marshal.ReleaseComObject(_workbook) != 0) { }
+            while (Marshal.ReleaseComObject(_excelApp) != 0) { }
         }
     }
 }

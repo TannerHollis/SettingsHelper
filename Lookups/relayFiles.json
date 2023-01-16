@@ -3,13 +3,21 @@
     "rdbTemplate": "RDB Templates\\SEL 351-6.rdb",
     "translationLayer": "sel_351-6.json"
   },
+
   "sel_351-7": {
     "rdbTemplate": "RDB Templates\\SEL 351-7.rdb",
     "translationLayer": "sel_351-7.json"
   },
+
   "sel_351s": {
     "rdbTemplate": "RDB Templates\\SEL 351S.rdb",
     "translationLayer": "sel_351s.json"
   },
-  "genericWordBitsFile": "genericWordBits.json"
+
+  "knownWordBitsFile": "knownWordBits.json",
+
+  "logger": {
+    "folder": "logs",
+    "fileName": "{0:s}.log"
+  }
 }
