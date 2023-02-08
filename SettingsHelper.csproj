@@ -42,6 +42,7 @@
       <HintPath>packages\Microsoft.Office.Interop.Word.15.0.4797.1004\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="OpenMcdf, Version=2.2.1.12, Culture=neutral, PublicKeyToken=fdbb1629d7c00800, processorArchitecture=MSIL">
       <HintPath>packages\OpenMcdf.2.2.1.12\lib\net40\OpenMcdf.dll</HintPath>
     </Reference>
@@ -50,6 +51,8 @@
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -83,37 +86,28 @@
     <Compile Include="CalcSheet.cs" />
     <Compile Include="CFFolder.cs" />
     <Compile Include="FileManager.cs" />
-    <Compile Include="LookupClasses\DirectionalSettings.cs" />
-    <Compile Include="LookupClasses\FrequencySettings.cs" />
-    <Compile Include="LookupClasses\GlobalSettings.cs" />
-    <Compile Include="LookupClasses\GroupSettings.cs" />
-    <Compile Include="LookupClasses\HarmonicBlockingSettings.cs" />
-    <Compile Include="LookupClasses\LogicSettings.cs" />
-    <Compile Include="LookupClasses\OvercurrentSettings.cs" />
-    <Compile Include="LookupClasses\RelayElement.cs" />
-    <Compile Include="LookupClasses\VoltageSettings.cs" />
+    <Compile Include="KnownWordBits.cs" />
+    <Compile Include="LoggerFileSettings.cs" />
     <Compile Include="RelayAutomator.cs" />
     <Compile Include="Relay.cs" />
+    <Compile Include="RelayFileAssociation.cs" />
+    <Compile Include="RelayFiles.cs" />
     <Compile Include="RelayLookup.cs" />
     <Compile Include="SettingChange.cs" />
     <Compile Include="SettingsGroup.cs" />
     <Compile Include="SettingsTranslator.cs" />
     <Compile Include="Setting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsTreeParser\SettingsTreeNode.cs" />
+    <Compile Include="SettingsTreeParser\SettingsTreeParser.cs" />
+    <Compile Include="WordBitLookup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Lookups\knownWordBits.json" />
-    <None Include="Lookups\RDB Templates\SEL 351-7.rdb" />
-    <None Include="Lookups\RDB Templates\SEL 351A.rdb" />
-    <None Include="Lookups\RDB Templates\SEL 351S.rdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Lookups\relayFiles.json" />
-    <None Include="Lookups\sel_351-7.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
+    <EmbeddedResource Include="ship.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

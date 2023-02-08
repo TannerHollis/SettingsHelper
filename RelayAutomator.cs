@@ -72,7 +72,8 @@ namespace SettingsHelper
                     FileManager.Log("Could not get Tag: " + genericWordBit + " from calc sheet.", FileManager.LogLevel.Warning);
                     continue;
                 }
-                List<SettingChange> changes = _settingsTranslator.SetGenericSetting(genericWordBit, setting);
+                // TODO: Set generic settings within Basis
+                List<SettingChange> changes = new List<SettingChange>(); // _settingsTranslator.SetGenericSetting(genericWordBit, setting);
                 settingChanges.AddRange(changes);
             }
 

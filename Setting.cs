@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace SettingsHelper
 {
@@ -29,8 +30,9 @@ namespace SettingsHelper
         public string Setpoint
         { 
             get 
-            { 
-                return _setting; 
+            {
+                string temp = _setting.Replace("\u001c", string.Empty);
+                return Regex.Replace(temp, @"[^\u0000-\u007F]+", string.Empty);
             } 
             set
             {

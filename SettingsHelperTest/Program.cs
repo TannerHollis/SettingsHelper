@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SettingsHelper;
+using System;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SettingsHelper;
 
-using OpenMcdf;
-using System.Windows.Forms.VisualStyles;
-using System.Security.Cryptography.X509Certificates;
+using SettingsHelper.SettingsTreeParser;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SettingsHelperTest
 {
@@ -16,6 +13,11 @@ namespace SettingsHelperTest
     {
         static void Main(string[] args)
         {
+            // Initialize Folder Structure
+            {
+                FileManager.InitFolderStructure();
+            }
+
             // Test SettingsGroup.cs
             {
                 bool testPass;
@@ -32,16 +34,6 @@ namespace SettingsHelperTest
                 testPass = settingGroup1["PHROT"].Setpoint.Equals("BCA");
 
                 PrintTestPass("SettingsGroup.cs", testPass);
-            }
-
-            // Test RelayLookup.cs
-            {
-                string jsonFile = "Lookups\\sel_351-7.json";
-                RelayLookup relayLookup = RelayLookup.FromFile(jsonFile);
-                relayLookup.ToFile("test.json");
-
-                FileManager.Log("This is a test 0", FileManager.LogLevel.Debug);
-                FileManager.Log("This is a test 1", FileManager.LogLevel.Warning);
             }
 
             // Test SettingsTranslator.cs
@@ -67,7 +59,7 @@ namespace SettingsHelperTest
 
                 for (int i = 0; i < wordBits.Length; i++)
                 {
-                    Console.WriteLine(wordBits[i] + " -> " + translator.LookupWordBit(wordBits[i]));
+                    Console.WriteLine(wordBits[i] + " -> " + translator.LookupWordBit(wordBits[i])[0]);
 
                     // Verify translator works
                     testPass &= translator.LookupWordBit(wordBits[i]).Equals(translatedWordBits[i]);
@@ -125,6 +117,8 @@ namespace SettingsHelperTest
                 relay.Rename("Test Relay 20221219");
                 relay.Save("SEL-351S_New.rdb");
                 relay.Close();
+
+                PrintTestPass("CFFolder.cs", true);
             }
 
             // Test SettingsHelper.cs, Final Test
@@ -142,6 +136,27 @@ namespace SettingsHelperTest
 
                 automator.Save();
                 automator.Close();
+
+                PrintTestPass("SettingsHelper.cs", true);
+            }
+
+            // Test SettingsTreeParser.cs
+            {
+                string relayFile = "SEL-351S.rdb";
+
+                string fullFileName = Path.Combine(Directory.GetCurrentDirectory(), relayFile);
+
+                Relay relay = new Relay(fullFileName);
+                relay.Load(0);
+
+                List<SettingsGroup> groups = new List<SettingsGroup>() { relay["SET_1.TXT"], relay["SET_L1.TXT"] };
+                SettingsTranslator translator = new SettingsTranslator("SEL 351S");
+
+                SettingsTreeParser parser = new SettingsTreeParser(translator, groups);
+
+                SettingsTreeNode root = parser.ParseAtWordBit("OUT101");
+
+                PrintTestPass("CalcSheet.cs", true);
             }
         }
 

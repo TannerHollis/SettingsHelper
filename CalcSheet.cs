@@ -21,7 +21,7 @@ namespace SettingsHelper
             _fileName = fileName;
             _excelApp = new Application();
             _workbook = _excelApp.Workbooks.Open(fileName);
-            _excelApp.Visible = true;
+            _excelApp.Visible = false;
         }
 
         public string GetName(string name)

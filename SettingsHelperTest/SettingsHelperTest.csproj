@@ -90,30 +90,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Lookups\knownWordBits.json">
-      <Link>Lookups\knownWordBits.json</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Lookups\RDB Templates\SEL 351-7.rdb">
-      <Link>Lookups\RDB Templates\SEL 351-7.rdb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Lookups\RDB Templates\SEL 351A.rdb">
-      <Link>Lookups\RDB Templates\SEL 351A.rdb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Lookups\RDB Templates\SEL 351S.rdb">
-      <Link>Lookups\RDB Templates\SEL 351S.rdb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Lookups\relayFiles.json">
-      <Link>Lookups\relayFiles.json</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Lookups\sel_351-7.json">
-      <Link>Lookups\sel_351-7.json</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="App.config" />
     <None Include="Example_Settings_Calc_Sheet.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
